@@ -58,11 +58,10 @@ public class IOInterface {
 		//Instantiate a PrintWriter object
 		PrintWriter writer = new PrintWriter(outputFile);
 		//Write JSON object to the specified file on the disk
-//			writer.write(myGson.toJson(mySite)); //mySite will be the site with start collection on
-		//successful export Message 
+		myGson = new GsonBuilder().setPrettyPrinting().create();
 		String jsonString = myGson.toJson(site);
 		writer.write(jsonString);
-		
+		//successful export Message 
 		String message = String.format("%s has been written successfully! \n", outputFile.getName());
 		JOptionPane.showMessageDialog(frame, message);
 		writer.close();
@@ -99,7 +98,6 @@ public class IOInterface {
 				}
 			}
 		}
-//		System.out.println(pickedSite.getItems());
 	}
 	
 	//get all the site collections
