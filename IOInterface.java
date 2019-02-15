@@ -51,16 +51,13 @@ public class IOInterface {
 	}
 	
 	//method to export JSON file
-    //takes in a site object to write to, then
-	public void writeToFile(Site site, String outputFileName) throws Exception{
+
+	public void writeToFile(String outputFileName) throws Exception{
 		//path and construct of the output file
 		outputFile = new File(System.getProperty("user.dir")+"/src/"+ outputFileName + ".json");
 		//Instantiate a PrintWriter object
 		PrintWriter writer = new PrintWriter(outputFile);
-		//Write JSON object to the specified file on the disk
-		myGson = new GsonBuilder().setPrettyPrinting().create();
-		String jsonString = myGson.toJson(site);
-		writer.write(jsonString);
+		
 		//successful export Message 
 		String message = String.format("%s has been written successfully! \n", outputFile.getName());
 		JOptionPane.showMessageDialog(frame, message);
@@ -98,6 +95,7 @@ public class IOInterface {
 				}
 			}
 		}
+//		System.out.println(pickedSite.getItems());
 	}
 	
 	//get all the site collections
