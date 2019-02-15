@@ -26,7 +26,7 @@ public class GraphicalUserInterface {
 
 	private JFrame frame;
 	private JTextField textField;
-	private File JSONFile;
+	private File JSONFile = null;
 	private String siteID;
 	private IOInterface myInterface;
 	private Site selectedSite = new Site();
@@ -70,6 +70,7 @@ public class GraphicalUserInterface {
 		
 		//Choose the file to be read(JSON)
 		JButton UploadButton = new JButton("Upload JSON");
+		UploadButton.setToolTipText("Navigate to the JSON file.");
 		UploadButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		UploadButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		UploadButton.setBounds(40, 74, 114, 23);
@@ -95,6 +96,7 @@ public class GraphicalUserInterface {
 		
 		//This functional button will call the ReadJson() with the input JSON as parameter
 		JButton readingButton = new JButton("Add Reading");
+		readingButton.setToolTipText("Read the selected JSON file.");
 		readingButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		readingButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		readingButton.setBounds(40, 120, 114, 23);
@@ -102,13 +104,18 @@ public class GraphicalUserInterface {
 		readingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				//Call to the method to read the JSON
-				try {
-					myInterface.ReadJson(JSONFile);
-					//Display the content of the input JSON
-					display.setText(display.getText() +"\n"+ myInterface.getListOfSite());
-				}catch(Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(frame, "Error Reading The File!");
+				if(JSONFile != null) {
+					try {
+						myInterface.ReadJson(JSONFile);
+						//Display the content of the input JSON
+						display.setText(display.getText() +"\n"+ myInterface.getListOfSite());
+					}catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(frame, "Error Reading The File!");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please choose a File to be read!");
 				}
 			}
 		});
@@ -136,6 +143,7 @@ public class GraphicalUserInterface {
 		
 		//this functional button allow a site collection to start saving
 		JButton startButton = new JButton("Start Collection");
+		startButton.setToolTipText("Start site collection.");
 		startButton.setBackground(UIManager.getColor("Button.background"));
 		startButton.setForeground(Color.BLACK);
 		startButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -144,17 +152,22 @@ public class GraphicalUserInterface {
 		frame.getContentPane().add(startButton);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				selectedSite.setRecording(true);
-				//referenced the selected site matching the site ID
-				myInterface.getSite(siteID, selectedSite);
-				//Show the selected site and status in the text field
-				String info = "locationID: "+siteID +" is now Collecting.";
-				
-				statusField.setText(info);
+				if(siteID != null) {
+					selectedSite.setRecording(true);
+					//referenced the selected site matching the site ID
+					myInterface.getSite(siteID, selectedSite);
+					//Show the selected site and status in the text field
+					String info = "locationID: "+siteID +" is now Collecting.";
+					statusField.setText(info);
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please Enter a site ID to start collecting!");
+				}
 			}
 		});
 		
 		JButton stopButton = new JButton("Stop Collection");
+		stopButton.setToolTipText("Stop site collection");
 		stopButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		stopButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		stopButton.setBackground(UIManager.getColor("Button.background"));
@@ -162,17 +175,22 @@ public class GraphicalUserInterface {
 		frame.getContentPane().add(stopButton);
 		stopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				//This is where the call to the method to stop saving will go
-				selectedSite.setRecording(false);
-				//Show the selected site and status in the text field
-				String info = "locationID: "+siteID +" is no longer Collecting.";
-				statusField.setText(info);
+				if(siteID != null) {
+					//This is where the call to the method to stop saving will go
+					selectedSite.setRecording(false);
+					//Show the selected site and status in the text field
+					String info = "locationID: "+siteID +" is no longer Collecting.";
+					statusField.setText(info);
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please Enter a site ID to stop collecting from!");
+				}
 			}
 		});
 		
 		statusField.setEditable(false);
 		statusField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		statusField.setBounds(40, 249, 252, 20);
+		statusField.setBounds(40, 249, 252, 23);
 		frame.getContentPane().add(statusField);
 		
 		
@@ -188,6 +206,7 @@ public class GraphicalUserInterface {
 		
 		//this functional button will export the site collection in a JSON format
 		JButton exportButton = new JButton("Export JSON");
+		exportButton.setToolTipText("Export your site(s) to a JSON file.");
 		exportButton.setAutoscrolls(true);
 		exportButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
@@ -202,7 +221,7 @@ public class GraphicalUserInterface {
 					if(outputFileName.equals("")) {
 						outputFileName = "SiteRecord";
 					}
-					myInterface.writeToFile(outputFileName);
+					myInterface.writeToFile(selectedSite, outputFileName);
 				}catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, "Export Cancelled!");
 				}
