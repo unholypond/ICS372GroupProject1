@@ -202,7 +202,7 @@ public class GraphicalUserInterface {
 					if(outputFileName.equals("")) {
 						outputFileName = "SiteRecord";
 					}
-					myInterface.writeToFile(outputFileName);
+					myInterface.writeToFile(selectedSite, outputFileName);
 				}catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, "Export Cancelled!");
 				}
