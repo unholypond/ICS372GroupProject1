@@ -59,10 +59,8 @@ public class IOInterface {
 		PrintWriter writer = new PrintWriter(outputFile);
 		//Write JSON object to the specified file on the disk
 		myGson = new GsonBuilder().setPrettyPrinting().create();
-		for(Site s: site){
-			String jsonString = myGson.toJson(s);
-			writer.write(jsonString);
-		}
+		String jsonString = myGson.toJson(site);
+		writer.write(jsonString);
 		//successful export Message 
 		String message = String.format("%s has been written successfully! \n", outputFile.getName());
 		JOptionPane.showMessageDialog(frame, message);
