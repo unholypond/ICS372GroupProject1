@@ -6,11 +6,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.util.ArrayList;
-import java.util.Iterator;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,7 +21,7 @@ public class IOInterface {
 	private File outputFile;
 	private Component frame;
 	private Gson myGson;
-	private ArrayList<Site> listOfSite = new ArrayList<>();
+	private Site reading = new Site();
 	
 	//File chooser constructor
 	public IOInterface(Component frame) {
@@ -51,17 +51,18 @@ public class IOInterface {
         return chooser.getSelectedFile();
 	}
 	
-	//method to export JSON file
-    //takes in a site object to write to, then
-	public void writeToFile(Site site, String outputFileName) throws Exception{
+	//Method to export reading to a file
+	public void writeToFile(ArrayList<Site> site, String outputFileName) throws Exception{
 		//path and construct of the output file
 		outputFile = new File(System.getProperty("user.dir")+"/src/"+ outputFileName + ".json");
 		//Instantiate a PrintWriter object
 		PrintWriter writer = new PrintWriter(outputFile);
 		//Write JSON object to the specified file on the disk
 		myGson = new GsonBuilder().setPrettyPrinting().create();
-		String jsonString = myGson.toJson(site);
-		writer.write(jsonString);
+		for(Site s: site){
+			String jsonString = myGson.toJson(s);
+			writer.write(jsonString);
+		}
 		//successful export Message 
 		String message = String.format("%s has been written successfully! \n", outputFile.getName());
 		JOptionPane.showMessageDialog(frame, message);
@@ -76,7 +77,7 @@ public class IOInterface {
 		Site mySite = myGson.fromJson(reader, Site.class);
 		//If mySite is not null, add it to the collection on sites
 		if(mySite != null) {
-			listOfSite.add(mySite);
+			reading = mySite;
 		}
 		reader.close();
 	}
@@ -88,24 +89,19 @@ public class IOInterface {
 	
 	//get specified site from collection 
 	public void getSite(String siteID, Site pickedSite) {
-//		Site mySite = new Site();
-		Iterator<Site> iterate = listOfSite.iterator();
-		while(iterate.hasNext()) {
-			ArrayList<Item> list =  iterate.next().getItems();
-			for(Item i :list) {
-				if(i.getSiteID().equals(siteID) && pickedSite.isRecording()) {
-					//Only the item with matching Site ID are add 
-					pickedSite.addItem(i);
-				}
+		for(Item item : reading.getItems()) {
+			if(item.getSiteID().equals(siteID) && pickedSite.isRecording()) {
+				//Only the item with matching Site ID are add 
+				pickedSite.addItem(item);
 			}
 		}
 	}
-	
+
 	//get all the site collections
 	public String getListOfSite() {
 		String sites = "";
-		for(Site s : listOfSite) {
-			sites += s.toString()+ "\n"; 
+		for(Item i : reading.getItems()) {
+			sites += i.toString()+ "\n\n"; 
 		}
 		return sites;
 	}
