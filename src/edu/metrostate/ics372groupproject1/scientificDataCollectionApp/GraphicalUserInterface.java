@@ -227,8 +227,13 @@ public class GraphicalUserInterface {
 		viewButton.setToolTipText("Show Items for a Site.");
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				//display a selected site's reading
-				display.setText(selectedSite.toString());
+				if (siteID != null) {
+					//display a selected site's reading
+					display.setText(selectedSite.toString());
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Nothing to display!");
+				}
 			}
 		});
 		viewButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
