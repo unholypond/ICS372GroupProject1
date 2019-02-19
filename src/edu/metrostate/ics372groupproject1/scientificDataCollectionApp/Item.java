@@ -16,7 +16,7 @@ public class Item {
 	@Expose
 	private String readingID;
 	
-	@SerializedName("reaading_value")
+	@SerializedName("reading_value")
 	@Expose
 	private double readingValue;
 	
