@@ -16,20 +16,21 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import javax.swing.border.EtchedBorder;
 
-
 public class GraphicalUserInterface {
 
 	private JFrame frame;
 	private JTextField textField;
-	private File JSONFile;
+	private File JSONFile = null;
 	private String siteID;
 	private IOInterface myInterface;
-	private Site selectedSite = new Site();
+	private Site selectedSite;
+	private ArrayList<Site> listOfSite = new ArrayList<>();
 
 	//Launch the application.
 	public static void main(String[] args) {
@@ -55,7 +56,7 @@ public class GraphicalUserInterface {
 	private void initialize() {
 		frame = new JFrame("Scientific Data Recorder");
 		frame.setFont(new Font("Tahoma", Font.BOLD, 13));
-		frame.setBounds(100, 100, 600, 650);
+		frame.setBounds(100, 100, 599, 723);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JTextArea textArea = new JTextArea();
@@ -70,6 +71,7 @@ public class GraphicalUserInterface {
 		
 		//Choose the file to be read(JSON)
 		JButton UploadButton = new JButton("Upload JSON");
+		UploadButton.setToolTipText("Navigate to the JSON file.");
 		UploadButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		UploadButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		UploadButton.setBounds(40, 74, 114, 23);
@@ -94,21 +96,27 @@ public class GraphicalUserInterface {
 		
 		
 		//This functional button will call the ReadJson() with the input JSON as parameter
-		JButton readingButton = new JButton("Add Reading");
-		readingButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		readingButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		readingButton.setBounds(40, 120, 114, 23);
-		frame.getContentPane().add(readingButton);
-		readingButton.addActionListener(new ActionListener() {
+		JButton readButton = new JButton("Read File");
+		readButton.setToolTipText("Read the selected JSON file.");
+		readButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		readButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		readButton.setBounds(40, 120, 114, 23);
+		frame.getContentPane().add(readButton);
+		readButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				//Call to the method to read the JSON
-				try {
-					myInterface.ReadJson(JSONFile);
-					//Display the content of the input JSON
-					display.setText(display.getText() +"\n"+ myInterface.getListOfSite());
-				}catch(Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(frame, "Error Reading The File!");
+				if(JSONFile != null) {
+					try {
+						myInterface.ReadJson(JSONFile);
+						//Display the content of the input JSON
+						display.setText(display.getText() +"\n"+ myInterface.getListOfSite());
+					}catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(frame, "Error Reading The File!");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please choose a File to be read!");
 				}
 			}
 		});
@@ -121,58 +129,67 @@ public class GraphicalUserInterface {
 		//Text field that takes the site ID of selected site
 		textField = new JTextField();
 		textField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textField.setBounds(147, 172, 151, 25);
+		textField.setBounds(190, 172, 151, 25);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				siteID = textField.getText();
+				//create a new site to contain the collection
+				selectedSite = new Site();
 				//Display the siteID to the user
 				textField.setText("");
 				statusField.setText("locationID: "+siteID);
-				
 			}
 		});
 		
 		//this functional button allow a site collection to start saving
 		JButton startButton = new JButton("Start Collection");
+		startButton.setToolTipText("Start site collection.");
 		startButton.setBackground(UIManager.getColor("Button.background"));
 		startButton.setForeground(Color.BLACK);
 		startButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		startButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		startButton.setBounds(305, 249, 114, 23);
+		startButton.setBounds(313, 220, 114, 23);
 		frame.getContentPane().add(startButton);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				selectedSite.setRecording(true);
-				//referenced the selected site matching the site ID
-				myInterface.getSite(siteID, selectedSite);
-				//Show the selected site and status in the text field
-				String info = "locationID: "+siteID +" is now Collecting.";
-				
-				statusField.setText(info);
+				if(siteID != null) {
+					selectedSite.setRecording(true);
+					//Show the selected site and status in the text field
+					String info = "locationID: "+siteID +" is now Collecting.";
+					statusField.setText(info);
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please Enter a site ID to start collecting!");
+				}
 			}
 		});
 		
-		JButton stopButton = new JButton("Stop Collection");
-		stopButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		stopButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		stopButton.setBackground(UIManager.getColor("Button.background"));
-		stopButton.setBounds(432, 249, 114, 23);
-		frame.getContentPane().add(stopButton);
-		stopButton.addActionListener(new ActionListener() {
+		JButton EndButton = new JButton("End Collection");
+		EndButton.setToolTipText("End site collection");
+		EndButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		EndButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		EndButton.setBackground(UIManager.getColor("Button.background"));
+		EndButton.setBounds(432, 220, 114, 23);
+		frame.getContentPane().add(EndButton);
+		EndButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				//This is where the call to the method to stop saving will go
-				selectedSite.setRecording(false);
-				//Show the selected site and status in the text field
-				String info = "locationID: "+siteID +" is no longer Collecting.";
-				statusField.setText(info);
+				if(siteID != null) {
+					//This is where the call to the method to stop saving will go
+					selectedSite.setRecording(false);
+					//Show the selected site and status in the text field
+					String info = "locationID: "+siteID +" is no longer Collecting.";
+					statusField.setText(info);
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please Enter a site ID to stop collecting from!");
+				}
 			}
 		});
-		
 		statusField.setEditable(false);
 		statusField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		statusField.setBounds(40, 249, 252, 20);
+		statusField.setBounds(40, 219, 258, 23);
 		frame.getContentPane().add(statusField);
 		
 		
@@ -181,19 +198,55 @@ public class GraphicalUserInterface {
 		display.setLineWrap(true);
 		display.setBorder(new TitledBorder ( new EtchedBorder (), "Site Reading"));
 		JScrollPane scrollPane = new JScrollPane(display);
-		scrollPane.setBounds(40, 280, 506, 274);
+		scrollPane.setBounds(40, 303, 506, 313);
 		scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		frame.getContentPane().add(scrollPane);
 
+		//Add collection to a specified site
+		JButton addButton = new JButton("Add Collection");
+		addButton.setToolTipText("Add Items to Site.");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if (siteID != null) {
+					//referenced the selected site matching the site ID
+					myInterface.getSite(siteID, selectedSite);
+					if(!listOfSite.contains(selectedSite)) {
+						listOfSite.add(selectedSite);						
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Please enter a site to add collection to!");
+				}
+			}
+		});
+		addButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		addButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		addButton.setBounds(39, 269, 115, 23);
+		frame.getContentPane().add(addButton);
+		
+		//View the site collections
+		JButton viewButton = new JButton("View Reading");
+		viewButton.setToolTipText("Show Items for a Site.");
+		viewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				if (siteID != null) {
+					//display a selected site's reading
+					display.setText(selectedSite.toString());
+				}
+				else {
+					JOptionPane.showMessageDialog(frame, "Nothing to display!");
+				}
+			}
+		});
+		viewButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		viewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		viewButton.setBounds(40, 638, 114, 23);
+		frame.getContentPane().add(viewButton);
+		
 		
 		//this functional button will export the site collection in a JSON format
 		JButton exportButton = new JButton("Export JSON");
-		exportButton.setAutoscrolls(true);
-		exportButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
-		exportButton.setBounds(40, 565, 114, 23);
-		frame.getContentPane().add(exportButton);
-		
+		exportButton.setToolTipText("Export your site(s) to a JSON file.");
 		exportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				//This is where the call to the method to write the JSON to a file will go
@@ -202,11 +255,16 @@ public class GraphicalUserInterface {
 					if(outputFileName.equals("")) {
 						outputFileName = "SiteRecord";
 					}
-					myInterface.writeToFile(outputFileName);
+					myInterface.writeToFile(listOfSite, outputFileName);
 				}catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, "Export Cancelled!");
 				}
 			}
 		});
+		exportButton.setAutoscrolls(true);
+		exportButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
+		exportButton.setBounds(432, 638, 114, 23);
+		frame.getContentPane().add(exportButton);
 	}
 }
