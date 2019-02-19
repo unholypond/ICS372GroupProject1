@@ -28,6 +28,9 @@ opt Start collection
     else Stop Collection
             GUI -> Site : setRecording(false) 
 end
+else View Reading
+    GUI -> GUI : display(selectedSite)
+
 else Export JSON
 Opt OK
     GUI -> IO interface: OutputFile()
