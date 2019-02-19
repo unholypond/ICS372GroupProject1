@@ -210,7 +210,9 @@ public class GraphicalUserInterface {
 				if (siteID != null) {
 					//referenced the selected site matching the site ID
 					myInterface.getSite(siteID, selectedSite);
-					listOfSite.add(selectedSite);
+					if(!listOfSite.contains(selectedSite)) {
+						listOfSite.add(selectedSite);						
+					}
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "Please enter a site to add collection to!");

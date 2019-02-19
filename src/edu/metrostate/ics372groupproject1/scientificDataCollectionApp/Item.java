@@ -29,7 +29,7 @@ public class Item {
 		this.readingType = readingType;
 		this.readingID = readingID;
 		this.readingValue = readingValue;
-		this.readingDate = readingDate;		
+		this.readingDate = readingDate;	
 	}
 
 	public String getSiteID() {
@@ -60,7 +60,7 @@ public class Item {
 		return readingValue;
 	}
 
-	public void setReadingValue(int readingValue) {
+	public void setReadingValue(double readingValue) {
 		this.readingValue = readingValue;
 	}
 
@@ -71,6 +71,7 @@ public class Item {
 	public void setReadingDate(long readingDate) {
 		this.readingDate = readingDate;
 	}
+	
 	//To string method
 		public String toString() {
 			return "Site id = " + siteID + ":\nreading type = " + readingType + 

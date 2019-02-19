@@ -10,7 +10,10 @@ public class Site {
 	private boolean recording;
 
 	public Site() {
-		recording = false;
+		recording = true;
+	}
+	public Site (String id) {
+		siteID = id;
 	}
 	
 	/**
