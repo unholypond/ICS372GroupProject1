@@ -11,7 +11,7 @@ public class Site {
 	
 	private String siteID;
 	private boolean recording;
-	private Set<String> reading_ids = new HashSet<String>();
+	private Set<String> readingIDs = new HashSet<String>();
 
 	public Site() {
 		recording = false;
@@ -48,9 +48,9 @@ public class Site {
 	}
 	
 	public void addItem(Item i) {
-		if(!reading_ids.contains(i.getReadingID())) {
+		if(!readingIDs.contains(i.getReadingID())) {
 			this.items.add(i);
-			this.reading_ids.add(i.getReadingID());
+			this.readingIDs.add(i.getReadingID());
 		}
 	}
 	
