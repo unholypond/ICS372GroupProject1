@@ -6,8 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.border.BevelBorder;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -16,6 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
@@ -31,6 +34,8 @@ public class GraphicalUserInterface {
 	private IOInterface myInterface;
 	private Site selectedSite;
 	private ArrayList<Site> listOfSite = new ArrayList<>();
+	private String fileName;
+	private JFileChooser chooser;
 
 	//Launch the application.
 	public static void main(String[] args) {
@@ -79,8 +84,8 @@ public class GraphicalUserInterface {
 		UploadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JSONFile = myInterface.chooseFile();
-					textArea.setText(myInterface.getFileName());
+					JSONFile = chooseFile();
+					textArea.setText(getFileName());
 				}
 				catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, e.getStackTrace());
@@ -256,6 +261,10 @@ public class GraphicalUserInterface {
 						outputFileName = "SiteRecord";
 					}
 					myInterface.writeToFile(listOfSite, outputFileName);
+					
+					//successful export Message is displayed on the screen
+					String message = String.format("%s has been written successfully! \n", outputFileName);
+					JOptionPane.showMessageDialog(frame, message);
 				}catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, "Export Cancelled!");
 				}
@@ -266,5 +275,33 @@ public class GraphicalUserInterface {
 		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
 		exportButton.setBounds(432, 638, 114, 23);
 		frame.getContentPane().add(exportButton);
+	}
+	
+	/*
+	 * ChooseFile allow to browse the file directory, and to choose a file, it returns the chosen file
+	 */	
+	private File chooseFile() throws IOException {
+		//Specify the current directory for the file chooser()
+        File currentDir = new File(System.getProperty("user.dir")+"/src");
+        chooser = new JFileChooser(currentDir);
+        
+        //filter on files with .text extension
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".JSON files", "json");
+        this.chooser.setFileFilter(filter);
+        
+        //open the file chooser dialog box
+
+        int status = chooser.showOpenDialog(frame);
+        if(status == JFileChooser.APPROVE_OPTION) {
+
+            //Construct the output file name
+            fileName =  chooser.getSelectedFile().getName();
+        }
+        return chooser.getSelectedFile();
+	}
+	
+	//method to get the input file name
+	private String getFileName() {
+		return fileName;
 	}
 }
