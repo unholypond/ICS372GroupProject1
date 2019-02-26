@@ -280,7 +280,7 @@ public class GraphicalUserInterface {
 	/*
 	 * ChooseFile allow to browse the file directory, and to choose a file, it returns the chosen file
 	 */	
-	private File chooseFile() throws IOException {
+	public File chooseFile() throws IOException {
 		//Specify the current directory for the file chooser()
         File currentDir = new File(System.getProperty("user.dir")+"/src");
         chooser = new JFileChooser(currentDir);
