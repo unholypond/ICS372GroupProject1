@@ -28,12 +28,12 @@ import javax.swing.border.EtchedBorder;
 public class GraphicalUserInterface {
 
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField siteIDField;
 	private File JSONFile = null;
 	private String siteID;
 	private IOInterface myInterface;
 	private Site selectedSite;
-	private ArrayList<Site> listOfSite = new ArrayList<>();
+	private ArrayList <Site> listOfSite = new ArrayList<>();
 	private String fileName;
 	private JFileChooser chooser;
 
@@ -64,8 +64,8 @@ public class GraphicalUserInterface {
 		frame.setBounds(100, 100, 599, 723);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		JTextArea textArea = new JTextArea();
-		JTextArea display = new JTextArea();
+		JTextArea fileNameDisply = new JTextArea();
+		JTextArea mainDisplay = new JTextArea();
 		JTextArea statusField = new JTextArea();
 		myInterface = new IOInterface(frame);
 		
@@ -85,7 +85,7 @@ public class GraphicalUserInterface {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					JSONFile = chooseFile();
-					textArea.setText(getFileName());
+					fileNameDisply.setText(getFileName());
 				}
 				catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, e.getStackTrace());
@@ -93,11 +93,11 @@ public class GraphicalUserInterface {
 			}
 		});
 		
-		textArea.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textArea.setEditable(false);
-		textArea.setFont(new Font("Tahoma", Font.ITALIC, 13));
-		textArea.setBounds(190, 74, 229, 22);
-		frame.getContentPane().add(textArea);
+		fileNameDisply.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		fileNameDisply.setEditable(false);
+		fileNameDisply.setFont(new Font("Tahoma", Font.ITALIC, 13));
+		fileNameDisply.setBounds(190, 74, 229, 22);
+		frame.getContentPane().add(fileNameDisply);
 		
 		
 		//This functional button will call the ReadJson() with the input JSON as parameter
@@ -113,8 +113,8 @@ public class GraphicalUserInterface {
 				if(JSONFile != null) {
 					try {
 						myInterface.ReadJson(JSONFile);
-						//Display the content of the input JSON
-						display.setText(display.getText() +"\n"+ myInterface.getListOfSite());
+						//mainDisplay the content of the input JSON
+						mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getListOfSite());
 					}catch(Exception e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(frame, "Error Reading The File!");
@@ -132,18 +132,18 @@ public class GraphicalUserInterface {
 		frame.getContentPane().add(siteId);
 		
 		//Text field that takes the site ID of selected site
-		textField = new JTextField();
-		textField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		textField.setBounds(190, 172, 151, 25);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		textField.addActionListener(new ActionListener() {
+		siteIDField = new JTextField();
+		siteIDField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		siteIDField.setBounds(190, 172, 151, 25);
+		frame.getContentPane().add(siteIDField);
+		siteIDField.setColumns(10);
+		siteIDField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				siteID = textField.getText();
+				siteID = siteIDField.getText();
 				//create a new site to contain the collection
 				selectedSite = new Site();
-				//Display the siteID to the user
-				textField.setText("");
+				//mainDisplay the siteID to the user
+				siteIDField.setText("");
 				statusField.setText("locationID: "+siteID);
 			}
 		});
@@ -199,10 +199,10 @@ public class GraphicalUserInterface {
 		
 		
 		//this Text area will contain the site reading 
-		display.setEditable(false);
-		display.setLineWrap(true);
-		display.setBorder(new TitledBorder ( new EtchedBorder (), "Site Reading"));
-		JScrollPane scrollPane = new JScrollPane(display);
+		mainDisplay.setEditable(false);
+		mainDisplay.setLineWrap(true);
+		mainDisplay.setBorder(new TitledBorder ( new EtchedBorder (), "Site Reading"));
+		JScrollPane scrollPane = new JScrollPane(mainDisplay);
 		scrollPane.setBounds(40, 303, 506, 313);
 		scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		frame.getContentPane().add(scrollPane);
@@ -235,11 +235,11 @@ public class GraphicalUserInterface {
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (siteID != null) {
-					//display a selected site's reading
-					display.setText(selectedSite.toString());
+					//mainDisplay a selected site's reading
+					mainDisplay.setText(selectedSite.toString());
 				}
 				else {
-					JOptionPane.showMessageDialog(frame, "Nothing to display!");
+					JOptionPane.showMessageDialog(frame, "Nothing to mainDisplay!");
 				}
 			}
 		});
@@ -262,7 +262,7 @@ public class GraphicalUserInterface {
 					}
 					myInterface.writeToFile(listOfSite, outputFileName);
 					
-					//successful export Message is displayed on the screen
+					//successful export Message is mainDisplayed on the screen
 					String message = String.format("%s has been written successfully! \n", outputFileName);
 					JOptionPane.showMessageDialog(frame, message);
 				}catch(Exception e) {

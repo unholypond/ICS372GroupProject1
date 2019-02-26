@@ -1,14 +1,12 @@
 package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
-//import static org.junit.Assert.*;
 
-import org.junit.Test;
+import junit.framework.TestCase;
 
-public class TestJUnit {
+public class UnitTest extends TestCase{
 
-	@Test
 	public void testGetSite() {
-		
+
 	}
 
 }
