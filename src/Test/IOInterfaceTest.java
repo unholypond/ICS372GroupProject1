@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 public class IOInterfaceTest extends TestCase {
 
-	public void testReadJson() {
+	public void testReadJson() throws Exception {
 //		fail("Not yet implemented");
 	}
 

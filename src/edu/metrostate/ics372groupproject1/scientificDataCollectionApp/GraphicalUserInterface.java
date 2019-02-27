@@ -61,7 +61,7 @@ public class GraphicalUserInterface {
 	private void initialize() {
 		frame = new JFrame("Scientific Data Recorder");
 		frame.setFont(new Font("Tahoma", Font.BOLD, 13));
-		frame.setBounds(100, 100, 599, 723);
+		frame.setBounds(100, 100, 594, 744);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		JTextArea fileNameDisply = new JTextArea();
@@ -79,7 +79,7 @@ public class GraphicalUserInterface {
 		UploadButton.setToolTipText("Navigate to the JSON file.");
 		UploadButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		UploadButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		UploadButton.setBounds(40, 74, 114, 23);
+		UploadButton.setBounds(33, 74, 114, 23);
 		frame.getContentPane().add(UploadButton);
 		UploadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -105,7 +105,7 @@ public class GraphicalUserInterface {
 		readButton.setToolTipText("Read the selected JSON file.");
 		readButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		readButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		readButton.setBounds(40, 120, 114, 23);
+		readButton.setBounds(33, 123, 114, 23);
 		frame.getContentPane().add(readButton);
 		readButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -134,7 +134,7 @@ public class GraphicalUserInterface {
 		//Text field that takes the site ID of selected site
 		siteIDField = new JTextField();
 		siteIDField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		siteIDField.setBounds(190, 172, 151, 25);
+		siteIDField.setBounds(147, 172, 114, 25);
 		frame.getContentPane().add(siteIDField);
 		siteIDField.setColumns(10);
 		siteIDField.addActionListener(new ActionListener() {
@@ -155,7 +155,7 @@ public class GraphicalUserInterface {
 		startButton.setForeground(Color.BLACK);
 		startButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		startButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		startButton.setBounds(313, 220, 114, 23);
+		startButton.setBounds(305, 172, 114, 23);
 		frame.getContentPane().add(startButton);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -176,7 +176,7 @@ public class GraphicalUserInterface {
 		EndButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		EndButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		EndButton.setBackground(UIManager.getColor("Button.background"));
-		EndButton.setBounds(432, 220, 114, 23);
+		EndButton.setBounds(432, 172, 114, 23);
 		frame.getContentPane().add(EndButton);
 		EndButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -194,7 +194,7 @@ public class GraphicalUserInterface {
 		});
 		statusField.setEditable(false);
 		statusField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		statusField.setBounds(40, 219, 258, 23);
+		statusField.setBounds(33, 267, 258, 23);
 		frame.getContentPane().add(statusField);
 		
 		
@@ -203,7 +203,7 @@ public class GraphicalUserInterface {
 		mainDisplay.setLineWrap(true);
 		mainDisplay.setBorder(new TitledBorder ( new EtchedBorder (), "Site Reading"));
 		JScrollPane scrollPane = new JScrollPane(mainDisplay);
-		scrollPane.setBounds(40, 303, 506, 313);
+		scrollPane.setBounds(33, 347, 506, 313);
 		scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 		frame.getContentPane().add(scrollPane);
 
@@ -226,7 +226,7 @@ public class GraphicalUserInterface {
 		});
 		addButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		addButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		addButton.setBounds(39, 269, 115, 23);
+		addButton.setBounds(33, 301, 115, 23);
 		frame.getContentPane().add(addButton);
 		
 		//View the site collections
@@ -245,7 +245,7 @@ public class GraphicalUserInterface {
 		});
 		viewButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		viewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		viewButton.setBounds(40, 638, 114, 23);
+		viewButton.setBounds(190, 301, 114, 23);
 		frame.getContentPane().add(viewButton);
 		
 		
@@ -273,8 +273,19 @@ public class GraphicalUserInterface {
 		exportButton.setAutoscrolls(true);
 		exportButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
-		exportButton.setBounds(432, 638, 114, 23);
+		exportButton.setBounds(432, 671, 114, 23);
 		frame.getContentPane().add(exportButton);
+		
+		JButton btnNewButton = new JButton("Add New Reading");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		btnNewButton.setBounds(33, 218, 167, 23);
+		frame.getContentPane().add(btnNewButton);
 	}
 	
 	/*
