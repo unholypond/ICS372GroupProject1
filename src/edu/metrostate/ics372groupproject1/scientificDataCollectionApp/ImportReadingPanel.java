@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 //import javax.swing.JTabbedPane;
 import javax.swing.border.EtchedBorder;
 
@@ -44,17 +45,16 @@ public class ImportReadingPanel extends JPanel {
 	private JTextArea mainDisplay;
 	private JButton UploadButton, readButton, startButton, addButton, EndButton, viewButton, exportButton;
 	private JScrollPane scrollPane;
-//	private JTabbedPane tabpanel;
+	private JTabbedPane tabpanel;
 	
-	public ImportReadingPanel(JFrame frame, ArrayList<Site> list) {
+	public ImportReadingPanel(JFrame frame, ArrayList<Site> list, JTabbedPane cp) {
 		//initialize all the widgets
 		this.frame = frame;
 		siteList = list;
 		myInterface = new IOInterface();
-//		, JTabbedPane cp
-//		tabpanel = cp;
+		tabpanel = cp;
 		fileNameLabel = new JLabel();
-		fileNameLabel.setBounds(136, 56, 206, 21);
+		fileNameLabel.setBounds(238, 56, 206, 21);
 		mainDisplay = new JTextArea();
 		statusField = new JLabel();
 		statusField.setBounds(42, 199, 229, 21);
@@ -126,14 +126,18 @@ public class ImportReadingPanel extends JPanel {
 				
 		//Text field that takes the site ID of selected site
 		siteIDField = new JTextField();
-		siteIDField.setBounds(128, 139, 86, 20);
+		siteIDField.setBounds(238, 139, 86, 20);
 		siteIDField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		siteIDField.setColumns(10);
 		siteIDField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				siteID = siteIDField.getText();
-				//create a new site to contain the collection
+				//create a new site which will contain the related readings and
+				//add it to the list of sites
 				selectedSite = new Site(siteID);
+				if(!siteList.contains(selectedSite)) {
+					siteList.add(selectedSite);						
+				}
 				//mainDisplay the siteID to the user
 				siteIDField.setText("");
 				statusField.setText("locationID: "+siteID);
@@ -142,8 +146,8 @@ public class ImportReadingPanel extends JPanel {
 		add(siteIDField);
 				
 		//this functional button allow a site collection to start saving
-		startButton = new JButton("Start Collection");
-		startButton.setBounds(324, 199, 111, 21);
+		startButton = new JButton("Start ");
+		startButton.setBounds(324, 199, 103, 21);
 		startButton.setToolTipText("Start site collection.");
 		startButton.setBackground(UIManager.getColor("Button.background"));
 		startButton.setForeground(Color.BLACK);
@@ -165,7 +169,7 @@ public class ImportReadingPanel extends JPanel {
 		add(startButton);
 		
 		//This button toggle the site boolean recording to true or false		
-		EndButton = new JButton("End Collection");
+		EndButton = new JButton("End ");
 		EndButton.setBounds(452, 199, 103, 21);
 		EndButton.setToolTipText("End site collection");
 		EndButton.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -201,7 +205,7 @@ public class ImportReadingPanel extends JPanel {
 		add(scrollPane);
 				
 		//Add collection to a specified site
-		addButton = new JButton("Add Collection");
+		addButton = new JButton("Add Readings");
 		addButton.setBounds(42, 257, 95, 21);
 		addButton.setToolTipText("Add Items to Site.");
 		addButton.addActionListener(new ActionListener() {
@@ -209,9 +213,6 @@ public class ImportReadingPanel extends JPanel {
 				if (siteID != null) {
 					//referenced the selected site matching the site ID
 					myInterface.getSiteReadings(siteID, selectedSite);
-					if(!siteList.contains(selectedSite)) {
-						siteList.add(selectedSite);						
-					}
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "Please enter a site to add collection to!");
@@ -225,7 +226,7 @@ public class ImportReadingPanel extends JPanel {
 				
 		//View the site collections
 		viewButton = new JButton("View Reading");
-		viewButton.setBounds(253, 138, 103, 21);
+		viewButton.setBounds(238, 257, 103, 21);
 		viewButton.setToolTipText("Show Items for a Site.");
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -269,16 +270,16 @@ public class ImportReadingPanel extends JPanel {
 		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
 		add(exportButton);
 		
-//		JButton btnNewButton = new JButton("Create Reading");
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				tabpanel.setSelectedIndex(1);
-//			}
-//		});
-//		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-//		btnNewButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-//		btnNewButton.setBounds(443, 257, 112, 23);
-//		add(btnNewButton);
+		JButton writeReading = new JButton("Create Reading");
+		writeReading.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabpanel.setSelectedIndex(1);
+			}
+		});
+		writeReading.setFont(new Font("Tahoma", Font.BOLD, 12));
+		writeReading.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
+		writeReading.setBounds(443, 257, 112, 21);
+		add(writeReading);
 				
 	}
 			
@@ -309,7 +310,4 @@ public class ImportReadingPanel extends JPanel {
 	private String getFileName() {
 		return fileName;
 	}
-//	public ArrayList<Site> getList() {
-//		return siteList;
-//	}
 }

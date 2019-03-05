@@ -49,8 +49,8 @@ public class GraphicalUserInterface {
 		
 		tabpanel = new JTabbedPane();
 		tabpanel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-		CreateReadingPanel createReadingPanel = new CreateReadingPanel(frame, siteList);
-		ImportReadingPanel importReadingPanel = new ImportReadingPanel(frame, siteList);
+		ImportReadingPanel importReadingPanel = new ImportReadingPanel(frame, siteList, tabpanel);
+		CreateReadingPanel createReadingPanel = new CreateReadingPanel(frame, siteList, tabpanel);
 		tabpanel.addTab("Import", importReadingPanel);
 		tabpanel.setToolTipTextAt(0, "Import study from a file system");
 		tabpanel.addTab("Create", createReadingPanel);
