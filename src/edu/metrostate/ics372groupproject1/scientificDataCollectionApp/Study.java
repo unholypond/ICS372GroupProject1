@@ -1,3 +1,4 @@
+
 package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
 import java.util.ArrayList;
@@ -16,7 +17,19 @@ public class Study {
 	private String studyId;
 	
 	private ArrayList<Site> sitesInStudy;
+	public Study() {
+		this.studyID = "";
+		this.studyName = "";
+	}
+  public class Study {
+	  private String studyID;
+	  private String studyName;
+  }
 	
+	public Study(String studyID, String studyName) {
+		this.studyID=studyID;
+		this.studyName=studyName;		
+	}
 	public String getStudyName() {
 		return studyName;
 	}
@@ -39,5 +52,10 @@ public class Study {
 		}
 	}
 	
+	@Override
+	public String toString() {
+		return "Study ID: " + this.studyID+" Study Name: "+this.studyName;
+	}
 	
-}
+}	
+
