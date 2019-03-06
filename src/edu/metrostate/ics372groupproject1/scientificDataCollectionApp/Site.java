@@ -1,6 +1,9 @@
 package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,11 +11,13 @@ public class Site {
 	
 	private String siteID;
 	private boolean recording;
+	private Set<String> readingIDs = new HashSet<String>();
 
 	public Site() {
-		recording = true;
+		recording = false;
 	}
 	public Site (String id) {
+		this();
 		siteID = id;
 	}
 	
@@ -44,7 +49,10 @@ public class Site {
 	}
 	
 	public void addItem(Item i) {
-		this.items.add(i);
+		if(!readingIDs.contains(i.getReadingID())) {
+			this.items.add(i);
+			this.readingIDs.add(i.getReadingID());
+		}
 	}
 	
 	public boolean isRecording() {

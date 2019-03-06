@@ -23,12 +23,13 @@ public class Item {
 	@SerializedName("reading_date")
 	@Expose
 	private long readingDate;
+	
 	private String unit;
 	
 	public Item() {
 		
 	}
-
+	
 	public Item(String siteID, String readingType, String readingID, double readingValue, long readingDate) {
 		this.siteID = siteID;
 		this.readingType = readingType;
@@ -77,6 +78,7 @@ public class Item {
 		this.readingDate = readingDate;
 	}
 	
+	
 	public String getUnit() {
 		return unit;
 	}
@@ -84,11 +86,11 @@ public class Item {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
-	//To string method
+
+		//To string method
 		public String toString() {
-			return "Site_id = " + siteID + "\nreading_type = " + readingType + 
-					"\nreading_id = " + readingID + "\nreading_value = " + readingValue + 
-					"\nreading_date = " + readingDate;
+			return "Site id = " + siteID + ":\nreading type = " + readingType + 
+					"\nreading id = " + readingID + "\nreading value = " + readingValue + 
+					"\nreading date = " + readingDate;
 		}
 }
