@@ -27,8 +27,6 @@ public class XMLSAXParserHandler extends DefaultHandler {
 	
 	boolean bStudyID=false;
 	boolean bStudyName=false;
-	
-	
 	boolean bReadingType=false;
 	boolean bReadingID=false;
 	boolean bReadingValue=false;
@@ -37,7 +35,6 @@ public class XMLSAXParserHandler extends DefaultHandler {
 	
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException{
-		//New addition
 		if(qName.equalsIgnoreCase("Study")) {
 			String id=attributes.getValue("id");			
 			//initialize Study object and set ID attribute
@@ -47,18 +44,13 @@ public class XMLSAXParserHandler extends DefaultHandler {
 			
 			
 		}
-		
-		
-		//End of new addition
-		
-		
 		else if(qName.equalsIgnoreCase("Reading")) {
 			
 			String type=attributes.getValue("type");
 			String id=attributes.getValue("id");
 			
 			//initialize item object and set ID and Type attributes
-			item=new Item();
+			item = new Item();
 			item.setReadingID(id);
 			item.setReadingType(type);
 			
@@ -101,7 +93,6 @@ public class XMLSAXParserHandler extends DefaultHandler {
 		}
 		
 	}
-	
 	
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {

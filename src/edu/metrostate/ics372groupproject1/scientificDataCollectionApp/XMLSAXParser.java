@@ -28,7 +28,7 @@ public class XMLSAXParser {
 			for(Item item:items) {
 				System.out.println("------------");
 				System.out.println(item);
-				System.out.println("Unit:" +item.getUnit());
+				System.out.println("Unit:" + item.getUnit());
 				
 			}		
 		}
