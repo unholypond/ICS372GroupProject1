@@ -23,7 +23,12 @@ public class Item {
 	@SerializedName("reading_date")
 	@Expose
 	private long readingDate;
+	private String unit;
 	
+	public Item() {
+		
+	}
+
 	public Item(String siteID, String readingType, String readingID, double readingValue, long readingDate) {
 		this.siteID = siteID;
 		this.readingType = readingType;
@@ -70,6 +75,14 @@ public class Item {
 
 	public void setReadingDate(long readingDate) {
 		this.readingDate = readingDate;
+	}
+	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 	//To string method

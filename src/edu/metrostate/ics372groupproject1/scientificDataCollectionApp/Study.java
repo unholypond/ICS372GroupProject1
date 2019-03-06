@@ -14,21 +14,17 @@ public class Study {
 	
 	@SerializedName("study_id")
 	@Expose
-	private String studyId;
+	private String studyID;
 	
 	private ArrayList<Site> sitesInStudy;
 	public Study() {
 		this.studyID = "";
 		this.studyName = "";
 	}
-  public class Study {
-	  private String studyID;
-	  private String studyName;
-  }
-	
+  
 	public Study(String studyID, String studyName) {
-		this.studyID=studyID;
-		this.studyName=studyName;		
+		this.studyID = studyID;
+		this.studyName = studyName;		
 	}
 	public String getStudyName() {
 		return studyName;
@@ -38,12 +34,12 @@ public class Study {
 		this.studyName = studyName;
 	}
 
-	public String getStudyId() {
-		return studyId;
+	public String getStudyID() {
+		return studyID;
 	}
 
-	public void setStudyId(String studyId) {
-		this.studyId = studyId;
+	public void setStudyID(String studyId) {
+		this.studyID = studyId;
 	}
 
 	public void setAllToCollect() {
