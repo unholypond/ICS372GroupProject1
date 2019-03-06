@@ -1,8 +1,6 @@
 package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -12,13 +10,13 @@ import org.xml.sax.helpers.DefaultHandler;
 public class XMLSAXParserHandler extends DefaultHandler {
 
 	//List to hold Item object
-	private List<Item> itemList=null;
+	private ArrayList<Item> itemList=null;
 	private Item item=null;
 	private Study study=null;
 	private StringBuilder stringBuilder=null; //data
 	
 	//getter method for itemList
-	public List<Item> getItemList(){
+	public ArrayList<Item> getItemList(){
 		return itemList;
 	}
 	public Study getStudy() {
