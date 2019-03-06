@@ -3,8 +3,17 @@ package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,7 +21,7 @@ import com.google.gson.GsonBuilder;
 public class IOInterface {
 	private File outputFile;
 	private Gson myGson;
-	private ArrayList <Item> readings;
+	public ArrayList <Item> readings;
 	
 	//IOInterface constructor, initialize class members
 	public IOInterface() {
@@ -52,7 +61,40 @@ public class IOInterface {
 		writer.close();
 		
 	}
-	
+	/*
+	 * Read the xml file
+	 */
+	public void readXMLFile(File file) {
+		SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+	try {
+		SAXParser saxParser=saxParserFactory.newSAXParser();
+		XMLSAXParserHandler handler=new XMLSAXParserHandler();
+		saxParser.parse(file, handler);
+		
+		//Get Item List
+		Study study = handler.getStudy();
+		readings = handler.getItemList();
+		//Need to create study 
+		
+//		//print Study information
+//		System.out.println(study.toString());
+//		//print Item information
+//		for(Item item:items) {
+//			System.out.println("------------");
+//			System.out.println(item);
+//			System.out.println("Unit:" + item.getUnit());
+//			
+//		}		
+	}
+	catch (ParserConfigurationException | SAXException | IOException e) {
+        e.printStackTrace();
+    }
+		
+	}
+//	
+//	
+//	
+//	
 	//get specified site reading from the list of all site readings 
 	public void getSiteReadings(String siteID, Site pickedSite) {
 		for(Item item : readings) {

@@ -34,7 +34,7 @@ public class ImportReadingPanel extends JPanel {
 	
 	private JFrame frame;
 	private JTextField siteIDField;
-	private File JSONFile = null;
+	private File importedFile = null;
 	private String siteID;
 	private IOInterface myInterface;
 	private Site selectedSite;
@@ -77,7 +77,7 @@ public class ImportReadingPanel extends JPanel {
 		UploadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					JSONFile = chooseFile();
+					importedFile = chooseFile();
 					fileNameLabel.setText(getFileName());
 				}
 				catch(Exception e) {
@@ -101,11 +101,20 @@ public class ImportReadingPanel extends JPanel {
 		readButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				//Call to the method to read the JSON
-				if(JSONFile != null) {
+				if(importedFile != null) {
 					try {
-						myInterface.ReadJson(JSONFile);
+						//extract the file extension
+						String extension = fileName.substring(fileName.lastIndexOf("."));
+						if(extension.equals(".json")) {
+						myInterface.ReadJson(importedFile);
 						//mainDisplay the content of the input JSON
 						mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getReadings());
+						}else {
+					    //parse Xml file
+							System.out.println(myInterface.readings);
+//							mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getReadings());
+//							JOptionPane.showMessageDialog(frame, "you got xml!");
+						}
 					}catch(Exception e) {
 						e.printStackTrace();
 						JOptionPane.showMessageDialog(frame, "Error Reading The File!");
@@ -292,7 +301,7 @@ public class ImportReadingPanel extends JPanel {
         chooser = new JFileChooser(currentDir);
         
         //filter on files with .text extension
-        FileNameExtensionFilter filter = new FileNameExtensionFilter(".JSON files", "json");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(".JSON & .XML files", "json", "xml");
         this.chooser.setFileFilter(filter);
         
         //open the file chooser dialog box
