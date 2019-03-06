@@ -89,6 +89,6 @@ public class Item {
 		public String toString() {
 			return "Site_id = " + siteID + "\nreading_type = " + readingType + 
 					"\nreading_id = " + readingID + "\nreading_value = " + readingValue + 
-					"\nreading_date = " + readingDate;
+					"\nunit = "+ unit + "\nreading_date = " + readingDate;
 		}
 }

@@ -89,8 +89,8 @@ public class Item {
 
 		//To string method
 		public String toString() {
-			return "Site id = " + siteID + ":\nreading type = " + readingType + 
-					"\nreading id = " + readingID + "\nreading value = " + readingValue + 
-					"\nreading date = " + readingDate;
+			return "Site_id = " + siteID + "\nreading_type = " + readingType + 
+					"\nreading_id = " + readingID + "\nreading-value = " + readingValue + 
+					"\nunit = " + unit + "\nreading_date = " + readingDate;
 		}
 }

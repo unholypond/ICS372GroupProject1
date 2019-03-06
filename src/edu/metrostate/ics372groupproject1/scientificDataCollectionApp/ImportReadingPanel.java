@@ -63,7 +63,7 @@ public class ImportReadingPanel extends JPanel {
 		setLayout(null);
 				
 				
-		header = new JLabel("To start recording , choose a JSON file to be read...");
+		header = new JLabel("To start recording , choose a file to be read...");
 		header.setBounds(148, 21, 314, 15);
 		header.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
 		add(header);
@@ -106,14 +106,13 @@ public class ImportReadingPanel extends JPanel {
 						//extract the file extension
 						String extension = fileName.substring(fileName.lastIndexOf("."));
 						if(extension.equals(".json")) {
-						myInterface.ReadJson(importedFile);
-						//mainDisplay the content of the input JSON
-						mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getReadings());
+							myInterface.ReadJson(importedFile);
+							//mainDisplay the content of the input JSON
+							mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getReadings());
 						}else {
 					    //parse Xml file
-							System.out.println(myInterface.readings);
-//							mainDisplay.setText(mainDisplay.getText() +"\n"+ myInterface.getReadings());
-//							JOptionPane.showMessageDialog(frame, "you got xml!");
+							myInterface.readXMLFile(importedFile);
+							mainDisplay.setText(myInterface.getReadings());
 						}
 					}catch(Exception e) {
 						e.printStackTrace();
