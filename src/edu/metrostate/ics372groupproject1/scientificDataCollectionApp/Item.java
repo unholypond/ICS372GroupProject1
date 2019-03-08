@@ -29,11 +29,12 @@ public class Item {
 		
 	}
 
-	public Item(String siteID, String readingType, String readingID, double readingValue, long readingDate) {
+	public Item(String siteID, String readingType, String unit, String readingID, double readingValue, long readingDate) {
 		this.siteID = siteID;
 		this.readingType = readingType;
 		this.readingID = readingID;
 		this.readingValue = readingValue;
+		this.unit = unit;
 		this.readingDate = readingDate;	
 	}
 
@@ -87,8 +88,9 @@ public class Item {
 	
 	//To string method
 		public String toString() {
-			return "Site_id = " + siteID + "\nreading_type = " + readingType + 
+			return "item : {\nSite_id = " + siteID + "\nreading_type = " + readingType + 
 					"\nreading_id = " + readingID + "\nreading_value = " + readingValue + 
-					"\nunit = "+ unit + "\nreading_date = " + readingDate;
+					"\nreading_unit = "+ unit + "\nreading_date = " + readingDate +
+					"\n}";
 		}
 }
