@@ -43,7 +43,6 @@ public class XMLSAXParserHandler extends DefaultHandler {
 			
 		}
 		else if(qName.equalsIgnoreCase("Reading")) {
-			
 			String type=attributes.getValue("type");
 			String id=attributes.getValue("id");
 			
@@ -89,7 +88,6 @@ public class XMLSAXParserHandler extends DefaultHandler {
 		if(qName.equalsIgnoreCase("Reading")) {
 			itemList.add(item);
 		}
-		
 	}
 	
 	@Override

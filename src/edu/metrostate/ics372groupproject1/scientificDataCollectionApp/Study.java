@@ -16,7 +16,11 @@ public class Study {
 	@Expose
 	private String studyID;
 	
-	private ArrayList<Site> sitesInStudy;
+	@SerializedName("site_readings")
+	@Expose
+	private ArrayList<Site> sitesInStudy = new ArrayList<>();
+	
+	//constructors
 	public Study() {
 		this.studyID = "";
 		this.studyName = "";
@@ -26,6 +30,7 @@ public class Study {
 		this.studyID = studyID;
 		this.studyName = studyName;		
 	}
+	
 	public String getStudyName() {
 		return studyName;
 	}
@@ -41,16 +46,33 @@ public class Study {
 	public void setStudyID(String studyId) {
 		this.studyID = studyId;
 	}
-
-	public void setAllToCollect() {
+	//adding sites to a study, takes a site as parameter
+	public void addSiteToStudy(Site site) {
+		sitesInStudy.add(site);
+	}
+	//set all site to start collecting
+	public void startAllSiteCollection() {
 		for(Site s : sitesInStudy) {
 			s.setRecording(true);
 		}
 	}
-	
+	//end all sites collection
+	public void endAllSiteCollection() {
+		for(Site s : sitesInStudy) {
+			s.setRecording(false);
+		}
+	}
+	//get the list of sites in study
+	public ArrayList<Site> getSiteInStudy() {
+		return this.sitesInStudy;
+	}
 	@Override
 	public String toString() {
-		return "Study ID: " + this.studyID+" Study Name: "+this.studyName;
+		String text = "";
+		for(Site s : sitesInStudy) {
+			text += s.toString() + "\n";
+		}
+		return "\nStudy_ID: " + this.studyID +"\nStudy_Name: "+ this.studyName + text;
 	}
 	
 }	
