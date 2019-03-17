@@ -2,6 +2,7 @@
 package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,9 +17,9 @@ public class Study {
 	@Expose
 	private String studyID;
 	
-	@SerializedName("site_readings")
+	@SerializedName("sites")
 	@Expose
-	private ArrayList<Site> sitesInStudy = new ArrayList<>();
+	private ArrayList<Site> listOfSite = new ArrayList<>();
 	
 	//constructors
 	public Study() {
@@ -46,30 +47,76 @@ public class Study {
 	public void setStudyID(String studyId) {
 		this.studyID = studyId;
 	}
+	
 	//adding sites to a study, takes a site as parameter
-	public void addSiteToStudy(Site site) {
-		sitesInStudy.add(site);
+	public void addSite(Site site) {
+		listOfSite.add(site);
 	}
+	
 	//set all site to start collecting
 	public void startAllSiteCollection() {
-		for(Site s : sitesInStudy) {
+		for(Site s : listOfSite) {
 			s.setRecording(true);
 		}
 	}
+	
 	//end all sites collection
 	public void endAllSiteCollection() {
-		for(Site s : sitesInStudy) {
+		for(Site s : listOfSite) {
 			s.setRecording(false);
 		}
 	}
-	//get the list of sites in study
-	public ArrayList<Site> getSiteInStudy() {
-		return this.sitesInStudy;
+		
+	/**
+	 * @param
+	 * setSiteForReading method takes a Readings object and sets up a list
+	 * of sites associated with each reading object under a study
+	 * @return
+	 * void
+	 */
+	public void setSiteForReading(Readings reading) {
+		Iterator<Item> itemIterator = reading.getReadings().iterator();
+		//Iterate over readings to create site and associate the items to it
+		while (itemIterator.hasNext()) {
+				Item currentItem = itemIterator.next();
+				if (currentItem.getSiteID() != null) {
+					Site currentSite = new Site(currentItem.getSiteID());
+					if (!this.listOfSite.contains(currentSite)) {
+						//the site is not yet in study so add empty site to study
+						listOfSite.add(currentSite);
+					} 
+				}
+		}
 	}
+	
+	/**
+	 * @param
+	 * This method takes an ID string as parameter and return 
+	 * a site from study that match the input string ID
+	 * @return
+	 * a Site is return to the caller
+	 */
+	public Site getSiteByID(String siteId) {
+		Site mySite = null;
+		for(Site site : this.listOfSite) {
+			if(site.getSiteID() != null && site.getSiteID().equals(siteId)) {
+				mySite = site;
+				break;
+			}
+		}
+		return mySite;
+	}
+	
+	//get the list of sites in study
+	public ArrayList<Site> getAllSite() {
+		return this.listOfSite;
+	}
+	
 	@Override
+	//Override the inherited toString method from Object class
 	public String toString() {
 		String text = "";
-		for(Site s : sitesInStudy) {
+		for(Site s : listOfSite) {
 			text += s.toString() + "\n";
 		}
 		return "\nStudy_ID: " + this.studyID +"\nStudy_Name: "+ this.studyName + text;

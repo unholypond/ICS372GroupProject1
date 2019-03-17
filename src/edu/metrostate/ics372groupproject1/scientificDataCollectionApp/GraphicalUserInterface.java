@@ -23,7 +23,7 @@ public class GraphicalUserInterface {
 				try {
 					GraphicalUserInterface window = new GraphicalUserInterface();
 					window.frame.setVisible(true);
-					window.frame.setPreferredSize(new Dimension(615, 760));
+					window.frame.setPreferredSize(new Dimension(625, 760));
 					window.frame.pack();
 				} catch (Exception e) {
 					e.printStackTrace();

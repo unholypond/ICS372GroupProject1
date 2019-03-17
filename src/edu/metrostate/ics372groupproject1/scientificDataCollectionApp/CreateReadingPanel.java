@@ -216,7 +216,7 @@ public class CreateReadingPanel extends JPanel {
 					readingDate = date.getTime();
 					//Add new item to site
 					newSite.addItem(new Item(siteID, readingType, readingUnit, readingID, readingValue, readingDate));
-					newStudy.addSiteToStudy(newSite);
+					newStudy.addSite(newSite);
 					JOptionPane.showMessageDialog(frame, "New study has been created!");
 //					System.out.println(allStudies.toString());
 				}else {
