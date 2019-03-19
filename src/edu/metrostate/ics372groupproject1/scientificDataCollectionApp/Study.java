@@ -103,7 +103,8 @@ public class Study {
 	
 	//get the list of sites in study
 	public ArrayList<Site> getAllSite() {
-		return (ArrayList<Site>) this.listOfSites.values();
+		ArrayList<Site> allSites = new ArrayList<Site>(listOfSites.values());
+		return allSites;
 	}
 	
 	@Override
