@@ -143,7 +143,7 @@ public class ImportReadingPanel extends JPanel {
 		});
 		add(UploadButton);
 		
-		//This functional button will call the ReadJson() with the input JSON as parameter
+		//This functional button will call the ReadJson() or readXMLFile with the input file
 		readButton = new JButton("Read File");
 		readButton.setBounds(40, 143, 83, 21);
 		readButton.setToolTipText("Read the selected JSON file.");
