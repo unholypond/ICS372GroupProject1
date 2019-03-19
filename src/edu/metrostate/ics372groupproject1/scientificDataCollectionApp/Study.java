@@ -108,13 +108,23 @@ public class Study {
 	}
 	
 	@Override
+	//equality of study implementation
+	public boolean equals(Object o) {
+		Study nstudy = null;
+		if(o instanceof Study) {
+			nstudy = (Study)o;
+		}
+		return this.studyID.equals(nstudy.getStudyID()) && this.studyName.equals(nstudy.getStudyName());
+	}
+	
+	@Override
 	//Override the inherited toString method from Object class
 	public String toString() {
 		String text = "";
 		for(Site s : listOfSites.values()) {
 			text += s.toString() + "\n";
 		}
-		return "\nStudy_ID: " + this.studyID +"\nStudy_Name: "+ this.studyName + text;
+		return "\nStudy_ID: " + this.studyID +"\nStudy_Name: "+ this.studyName +"\n" + text;
 	}
 	
 }	

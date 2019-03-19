@@ -100,14 +100,13 @@ public class Site {
 	 * @return
 	 * return true if equal and false other wise
 	 */
-	public boolean equals(Object o) {
-		if(o instanceof Site) {
-			Site site = (Site)o;
-			//true if both siteID field are equal
-			return this.siteID.equals(site.getSiteID());
-		}else {
-			return false;
+	public boolean equals(Object object) {
+		Site nsite = null;
+		if(object instanceof Site) {
+			nsite = (Site)object;
 		}
+		//true if both siteID field are equal
+		return this.siteID.equals(nsite.getSiteID());
 	}
 	
 	//to string method 

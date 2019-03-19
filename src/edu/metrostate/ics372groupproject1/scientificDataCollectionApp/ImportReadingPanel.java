@@ -49,6 +49,9 @@ public class ImportReadingPanel extends JPanel {
 	private JButton UploadButton, readButton, startButton, addButton, EndButton, viewButton, exportButton;
 	private JScrollPane scrollPane;
 	
+	private String title;
+	private int messageType;
+	
 	public ImportReadingPanel(JFrame frame, ArrayList<Study> list, JTabbedPane cp) {
 		//initialize all the widgets
 		this.frame = frame;
@@ -133,8 +136,13 @@ public class ImportReadingPanel extends JPanel {
 		UploadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					studyNameField.setText("");
+					studyIDField.setText("");
+					//reset imported study instance to null
+					importedStudy = null;
 					importedFile = chooseFile();
 					fileNameLabel.setText(getFileName());
+					studyNameField.requestFocus();
 				}
 				catch(Exception e) {
 					JOptionPane.showMessageDialog(frame, e.getStackTrace());
@@ -157,17 +165,36 @@ public class ImportReadingPanel extends JPanel {
 						if(isJSON(fileName)) {
 							//parse JSON
 							readings = jsonFile.readJSON(importedFile);
-							importedStudy = new Study(StudyID, StudyName);
-							//Add empty sites to study
-							importedStudy.setSiteForReading(readings);
-							//Display the content of the input JSON
-							mainDisplay.setText(readings.toString());
-							readButton.transferFocus();
+							if ( StudyName != null && StudyID != null) {
+								importedStudy = new Study(StudyID, StudyName);
+								/**
+								 * Check if record contains imported study
+								 * if so return it 
+								 */
+								if (records.contains(importedStudy)) {
+									importedStudy = getStudyFromRecord(importedStudy);
+								}
+								//Add empty sites to study
+								importedStudy.setSiteForReading(readings);
+								//Display the content of the input JSON
+								mainDisplay.setText(readings.toString());
+								//clear the label for input file
+								fileNameLabel.setText("");
+								readButton.transferFocus();
+							}else {
+								String message = "Please provide study ID and name to continue!";
+								JOptionPane.showMessageDialog(frame, message);
+								//return the cursor to study name field component
+								studyNameField.requestFocus();
+							}
 						}else {
 							//parse XML file
 							readings = xmlFile.readXMLFile(importedFile);
 							//set the study from the imported file
 							importedStudy = xmlFile.getStudy();
+							if (records.contains(importedStudy)) {
+								importedStudy = getStudyFromRecord(importedStudy);
+							}
 							//Add empty sites to study
 							importedStudy.setSiteForReading(readings);
 							if (importedStudy != null) {
@@ -178,11 +205,14 @@ public class ImportReadingPanel extends JPanel {
 							
 							//Display the content of the XML file
 							mainDisplay.setText(readings.toString());
+							//clear the label for input file
+							fileNameLabel.setText("");
 							readButton.transferFocus();
 						}
 					}catch(Exception e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(frame, "Error Reading The File!");
+						title = "Error";
+						messageType = JOptionPane.ERROR_MESSAGE;
+						JOptionPane.showMessageDialog(frame, e.getMessage(), title, messageType);
 					}
 				}
 				else {
@@ -216,7 +246,11 @@ public class ImportReadingPanel extends JPanel {
 					}else {
 						selectedSite = importedStudy.getSiteByID(siteID);
 					}
-					//add the study to the records
+					
+					/**
+					 * Add the study to the records if it is not already
+					 * in record
+					 */
 					if (!records.contains(importedStudy)) {
 						records.add(importedStudy);
 					}
@@ -291,7 +325,7 @@ public class ImportReadingPanel extends JPanel {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				if (importedStudy.getAllSite().contains(selectedSite)) {
-					//referenced the selected site matching the site ID
+					//Add readings to matching site in study
 					selectedSite.addReadings(readings);
 				}
 				else {
@@ -304,15 +338,15 @@ public class ImportReadingPanel extends JPanel {
 		add(addButton);
 
 				
-		//View the site collections
+		//View the readings in study
 		viewButton = new JButton("View ");
 		viewButton.setBounds(152, 257, 68, 21);
 		viewButton.setToolTipText("Show Items for a Site.");
 		viewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				if (selectedSite != null) {
+				if (selectedSite != null && !importedStudy.getAllSite().isEmpty()) {
 					//mainDisplay a selected site's reading
-					mainDisplay.setText(selectedSite.toString());
+					mainDisplay.setText(importedStudy.getAllSite().toString());
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "No site selected for display!");
@@ -358,10 +392,6 @@ public class ImportReadingPanel extends JPanel {
 				}
 			}
 		});
-		
-		
-		
-		
 		exportButton.setAutoscrolls(true);
 		exportButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		exportButton.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, Color.DARK_GRAY, null));
@@ -419,5 +449,14 @@ public class ImportReadingPanel extends JPanel {
 		return importedStudy;
 	}
 	
+	/**
+	 * @param Study as an input parameter
+	 * @return
+	 * a study from the record
+	 */
+	public Study getStudyFromRecord(Study s) {
+		int index = records.indexOf(s);
+		return records.get(index);
+	}
 	
 }

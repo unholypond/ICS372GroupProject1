@@ -174,8 +174,12 @@ public class CreateReadingPanel extends JPanel {
 		readingValueField = new JTextField();
 		readingValueField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				readingValue = Double.parseDouble(readingValueField.getText());
-				readingValueField.transferFocus();
+				try {
+					readingValue = Double.parseDouble(readingValueField.getText());
+					readingValueField.transferFocus();
+				} catch (NumberFormatException exception) {
+					JOptionPane.showMessageDialog(frame, exception.getMessage());
+				}
 			}
 		});
 		readingValueField.setBounds(222, 331, 105, 21);
@@ -188,49 +192,58 @@ public class CreateReadingPanel extends JPanel {
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (!allStudies.isEmpty()) {
-					//check for existing study, if not, create one!
-					boolean found = false;
-					for (Study st : allStudies) {
-						if (st.getStudyID().equals(studyID) && st.getStudyName().equals(studyName)) {
-							newStudy = st;
-							found = true;
-							break;
+				
+				if (studyID != null && !studyID.equals("") && studyName != null && !studyName.equals("")) {
+					if (!allStudies.isEmpty()) {
+						//check for existing study, if not, create one!
+						boolean found = false;
+						for (Study st : allStudies) {
+							if (st.getStudyID().equals(studyID) && st.getStudyName().equals(studyName)) {
+								newStudy = st;
+								found = true;
+								break;
+							}
 						}
-					}
-					if (!found) {
+						if (!found) {
+							newStudy = new Study(studyID, studyName);
+							allStudies.add(newStudy);
+						}
+					} else {
 						newStudy = new Study(studyID, studyName);
 						allStudies.add(newStudy);
 					} 
-				} else {
-					newStudy = new Study(studyID, studyName);
-					allStudies.add(newStudy);
-				}
-				//Instantiate a new site that will contain the item created
-				Site newSite = new Site(siteID);
-				//for testing purpose
-				newSite.setRecording(true);
-				if(newSite.isRecording()) {
-					Date date = new Date();
-					readingDate = date.getTime();
-					//Add new item to site
-					newSite.addItem(new Item(siteID, readingType, readingUnit, readingID, readingValue, readingDate));
-					newStudy.addSite(newSite);
-					JOptionPane.showMessageDialog(frame, "New study has been created!");
-//					System.out.println(allStudies.toString());
+				
+					//validate site ID before a site
+					if (siteID != null && !siteID.equals("")) {
+						//Instantiate a new site that will contain the item created
+						Site newSite = new Site(siteID);
+						//for testing purpose
+						newSite.setRecording(true);
+						Date date = new Date();
+						readingDate = date.getTime();
+						//Add new item to site
+						newSite.addItem(
+								new Item(siteID, readingType, readingUnit, readingID, readingValue, readingDate));
+						newStudy.addSite(newSite);
+						System.out.println(newStudy.toString());
+						JOptionPane.showMessageDialog(frame, "Study has been created!");
+						//reset all fields 
+						studyNameField.setText("");
+						studyIDField.setText("");
+						siteidField.setText("");
+						readingTypeField.setText("");
+						readingUnitField.setText("");
+						readingIDField.setText("");
+						readingValueField.setText("");
+					}else {
+						JOptionPane.showMessageDialog(frame, "Must have a site ID!", "Error", JOptionPane.ERROR_MESSAGE);
+						siteidField.requestFocus();
+					}
 				}else {
-					JOptionPane.showMessageDialog(frame, "Site is not collecting!");
+					JOptionPane.showMessageDialog(frame, "Please Provide a study name and ID!");
+					studyNameField.requestFocus();
 				}
 				
-				//reset all fields 
-				studyNameField.setText("");
-				studyIDField.setText("");
-				siteidField.setText("");
-				readingTypeField.setText("");
-				readingUnitField.setText("");
-				readingIDField.setText("");
-				readingValueField.setText("");
 			}
 		});
 		submitButton.setBounds(222, 386, 105, 31);

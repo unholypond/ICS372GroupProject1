@@ -19,7 +19,6 @@ public class JSONFile {
 	//Class members 
 	private File outputFile;
 	
-	
 	//constructor, initialize class members
 	public JSONFile() {
 		outputFile = null;
@@ -31,10 +30,10 @@ public class JSONFile {
 	 * and return list of sites objects
 	 */	
 	public Readings readJSON(File input) throws Exception{
-		Readings myReadings = new Readings();
-		Gson myGson = new Gson(); //instance of GSON 
 		//Instantiates a BufferReader object that takes the input file as an argument 
 		BufferedReader reader = new BufferedReader(new FileReader(input));
+		Gson myGson = new Gson(); //instance of GSON 
+		Readings myReadings = new Readings();
 		myReadings = myGson.fromJson(reader, Readings.class);
 		reader.close();
 		return myReadings;

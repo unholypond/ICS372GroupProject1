@@ -101,18 +101,17 @@ public class Item {
 	}
 	
 	//defining equality among items
-	public boolean equals(Object o) {
-		if(o instanceof Item) {
-			Item item = (Item)o;
-			final boolean EQUAL_SITE_ID = this.siteID.equals(item.getSiteID());
-			final boolean EQUAL_READING_TYPE = this.readingType.equals(item.getReadingType());
-			final boolean EQUAL_READING_ID = this.readingID.equals(item.getReadingID());
-			final boolean EQUAL_READING_VALUE = this.readingValue == item.getReadingValue();
-			
-			return EQUAL_SITE_ID && EQUAL_READING_TYPE && EQUAL_READING_ID && EQUAL_READING_VALUE;
-		}else {
-			return false;
+	public boolean equals(Object object) {
+		Item nitem = null;
+		if(object instanceof Item) {
+			nitem = (Item)object;
 		}
+		final boolean EQUAL_SITE_ID = this.siteID.equals(nitem.getSiteID());
+		final boolean EQUAL_READING_TYPE = this.readingType.equals(nitem.getReadingType());
+		final boolean EQUAL_READING_ID = this.readingID.equals(nitem.getReadingID());
+		final boolean EQUAL_READING_VALUE = this.readingValue == nitem.getReadingValue();
+		//return true if equal and false other wise
+		return EQUAL_SITE_ID && EQUAL_READING_TYPE && EQUAL_READING_ID && EQUAL_READING_VALUE;
 	}
 	
 	//To string method
