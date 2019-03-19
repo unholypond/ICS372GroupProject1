@@ -35,7 +35,8 @@ public class Site {
 	}
 
 	public ArrayList<Item> getItems() {
-		return (ArrayList<Item>) items.values();
+		ArrayList<Item> allItems = new ArrayList<Item>(items.values());
+		return allItems;
 	}
 
 	public void setRecording(boolean bool) {
