@@ -1,12 +1,6 @@
 package Test;
 
-import static org.junit.Assert.assertThrows;
-
 import java.io.File;
-import java.io.FileNotFoundException;
-
-import org.junit.function.ThrowingRunnable;
-
 import junit.framework.TestCase;
 
 import edu.metrostate.ics372groupproject1.scientificDataCollectionApp.JSONFile;

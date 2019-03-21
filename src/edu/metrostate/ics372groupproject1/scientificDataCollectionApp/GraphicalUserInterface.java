@@ -2,7 +2,6 @@ package edu.metrostate.ics372groupproject1.scientificDataCollectionApp;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -14,7 +13,7 @@ import java.awt.event.WindowEvent;
 public class GraphicalUserInterface {
 	private JFrame frame;
 	private JTabbedPane tabPanel;
-	private ArrayList<Study> studyList;
+	private Record record;
 	private final int OPTION_TYPE = JOptionPane.YES_NO_OPTION;
 	private final int MESSAGE_TYPE = JOptionPane.QUESTION_MESSAGE;
 	private static final String TITLE = "Save on Exit";
@@ -39,7 +38,7 @@ public class GraphicalUserInterface {
 	 * the two panel import panel and create panel.
 	 */
 	private void initialize() {
-		studyList = new ArrayList<>();   //list of all studies
+		record = new Record();   //list of all studies
 		frame = new JFrame("Scientific Data Recorder");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
@@ -63,9 +62,9 @@ public class GraphicalUserInterface {
 		tabPanel = new JTabbedPane();
 		tabPanel.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		//main panel that takes care of input files
-		ImportReadingPanel importReadingPanel = new ImportReadingPanel(frame, studyList, tabPanel);
+		ImportReadingPanel importReadingPanel = new ImportReadingPanel(frame, record, tabPanel);
 		//create new study and readings panel
-		CreateReadingPanel createReadingPanel = new CreateReadingPanel(frame, studyList, tabPanel);
+		CreateReadingPanel createReadingPanel = new CreateReadingPanel(frame, record, tabPanel);
 		tabPanel.addTab("Import", importReadingPanel);
 		tabPanel.setToolTipTextAt(0, "Import study from a file system");
 		tabPanel.addTab("Create", createReadingPanel);
