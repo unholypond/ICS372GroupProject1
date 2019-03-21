@@ -22,7 +22,6 @@ public class JSONFileTest extends TestCase{
 		
 		double value = rd.getReadings().get(0).getReadingValue();
 		assertEquals(84d, value);
-		
 	}
 
 	//test the write method of JSONFile

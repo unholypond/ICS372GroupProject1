@@ -209,6 +209,7 @@ public class ImportReadingPanel extends JPanel {
 					}catch(Exception e) {
 						String title = "Error";
 						int messageType = JOptionPane.ERROR_MESSAGE;
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(frame, e.getCause(), title, messageType);
 					}
 				}

@@ -35,6 +35,11 @@ public class JSONFile {
 		Readings myReadings = new Readings();
 		myReadings = myGson.fromJson(reader, Readings.class);
 		reader.close();
+		for(Item i : myReadings.getReadings()) {
+			//correction to date and unit in the imported readings
+			i.validateDate();
+			i.ValidateUnit();
+		}
 		return myReadings;
 	}
 	
