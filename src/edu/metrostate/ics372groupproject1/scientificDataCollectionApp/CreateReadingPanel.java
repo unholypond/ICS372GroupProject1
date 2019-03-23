@@ -14,7 +14,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
@@ -35,7 +34,7 @@ public class CreateReadingPanel extends JPanel {
 	private JTabbedPane tabpanel;
 	private JLabel studyNameLabel, studyIDLabel, siteidLabel, readingTypeLabel, readingUnitLabel, readingIDLabel, readingValueLabel; 
 	private JTextField studyNameField, studyIDField, siteidField, readingTypeField, readingUnitField, readingIDField, readingValueField;
-	private JButton submitButton;
+	private JButton submitButton, cancel;
 
 	/*
 	 * FormPanel constructor that create the components for this panel
@@ -196,27 +195,14 @@ public class CreateReadingPanel extends JPanel {
 				final int TYPE = JOptionPane.YES_NO_OPTION;
 				int response;// NO = 1 and YES = 0;
 				if (studyID != null && !studyID.equals("") && studyName != null && !studyName.equals("")) {
-					if (!records.isEmpty()) {
-						//check for existing study, if not, create one!
-						boolean found = false;
-						Iterator<Study> iterate = records.iterator();
-						while (iterate.hasNext()) {
-							Study st = iterate.next();
-							if (st.getStudyID().equals(studyID) && st.getStudyName().equals(studyName)) {
-								newStudy = st;
-								found = true;
-								break;
-							}
-						}
-						//If the study entered is not in the record, create a new one
-						if (!found) {
-							newStudy = new Study(studyID, studyName);
-							records.add(newStudy);
-						}
-					} else {
-						//if record is empty, create a new study and add to records
+					Study temp = Record.findByAttributes(studyName, studyID);
+					if( temp != null) {
+						//study has been found in record
+						newStudy = temp;
+					}else {
+						//study not found in record
 						newStudy = new Study(studyID, studyName);
-						records.add(newStudy);
+						records.addStudy(newStudy);
 					}
 
 					//validate site ID before a site
@@ -256,7 +242,7 @@ public class CreateReadingPanel extends JPanel {
 		submitButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(submitButton);
 		
-		JButton cancel = new JButton("Cancel");
+		cancel = new JButton("Cancel");
 		cancel.setToolTipText("return to import tab");
 		cancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

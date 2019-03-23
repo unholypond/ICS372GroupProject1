@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
  */
 
 public class XMLFile {
-	private SAXParserFactory saxParserFactory;
+	private SAXParserFactory saxParserFactory = null;
 	private Study myStudy; //variable to hold the input study from XML
 	
 	public XMLFile() {

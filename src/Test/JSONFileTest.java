@@ -9,12 +9,11 @@ import edu.metrostate.ics372groupproject1.scientificDataCollectionApp.Readings;
 
 public class JSONFileTest extends TestCase{
 	File testJson = new File("../ICS372GroupProject1/src/Test/jsonTest.json");
-	JSONFile jf = new JSONFile();
 	Readings rd = new Readings();
 	
 	//test the read method of JSONFile
 	public void testReadJSON() throws Exception{
-		rd = jf.readJSON(testJson);
+		rd = JSONFile.readJSON(testJson);
 		assertEquals(1, rd.getReadings().size());
 		
 		String actual = rd.getReadings().get(0).getSiteID();

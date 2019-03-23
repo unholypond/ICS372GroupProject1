@@ -9,8 +9,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Site {
 	
-//	@SerializedName("site_ID")
-//	@Expose
 	private String siteID;
 	private boolean recording;
 	//Creating collection class to store objects read from JSON file.
@@ -113,7 +111,7 @@ public class Site {
 	public String toString() {
 		String text = "";
 		for(Item i : items.values()) {
-			text += i.toString() + "\n";
+			text += i.toString() + "\n\r";
 		}
 		return text;
 	}

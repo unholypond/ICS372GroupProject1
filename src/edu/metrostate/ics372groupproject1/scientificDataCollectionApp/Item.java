@@ -121,8 +121,9 @@ public class Item {
 		return "{\nSite_id = " + siteID + "\nreading_type = " + readingType + 
 				"\nreading_id = " + readingID + "\nreading_value = " + readingValue + 
 				"\nreading_unit = "+ unit + "\nreading_date = " + readingDate +
-				"\n}";
+				"\n\r}";
 	}
+	
 	/**
 	 * Check the date field, if no date in file
 	 * replace 0 by imported date
