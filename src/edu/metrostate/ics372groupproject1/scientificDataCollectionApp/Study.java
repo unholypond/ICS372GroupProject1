@@ -79,14 +79,14 @@ public class Study {
 		Iterator<Item> itemIterator = reading.getReadings().iterator();
 		//Iterate over readings to create site and associate the items to it
 		while (itemIterator.hasNext()) {
-				Item currentItem = itemIterator.next();
-				if (currentItem.getSiteID() != null) {
-					Site currentSite = new Site(currentItem.getSiteID());
-					if (!this.listOfSites.containsKey(currentSite.getSiteID())) {
-						//the site is not yet in study so add empty site to study
-						listOfSites.put(currentSite.getSiteID(), currentSite);
-					} 
-				}
+			Item currentItem = itemIterator.next();
+			if (currentItem.getSiteID() != null) {
+				Site currentSite = new Site(currentItem.getSiteID());
+				if (!this.listOfSites.containsKey(currentSite.getSiteID())) {
+					//the site is not yet in study so add empty site to study
+					listOfSites.put(currentSite.getSiteID(), currentSite);
+				} 
+			}
 		}
 	}
 	
