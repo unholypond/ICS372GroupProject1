@@ -70,7 +70,7 @@ public class Site {
 		boolean result = false;
 		if(this.recording) {
 			for(Item item : readings.getReadings()) {
-				if(item.getSiteID() != null && item.getSiteID().equals(this.siteID)) {
+				if(item.getSiteID() != null && item.getSiteID().equals(this.siteID) && !this.allItems.contains(item)) {
 					allItems.add(item);
 					result = allItems.contains(item);
 				}
@@ -113,5 +113,9 @@ public class Site {
 		}
 		return text;
 	}
-
+	
+	//return true is the site has not readings
+	public boolean isEmpty() {
+		return allItems.isEmpty();
+	}
 }

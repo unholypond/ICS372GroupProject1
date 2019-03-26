@@ -121,7 +121,7 @@ public class ItemTest extends TestCase {
 	}
 	
 	public void testTwoItemEquality() {
-		Item item1 = new Item("12345", "Humidity", "", "12547g", 25, 0);
+		Item item1 = new Item("12345", "Humidity", "percent", "12547g", 25, 0);
 		Item item2 = new Item("12345", "bar_press", "", "12547g", 25, 0);
 		assertEquals(false, item1.equals(item2));
 		

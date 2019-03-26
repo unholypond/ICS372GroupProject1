@@ -52,12 +52,14 @@ public class JSONFileTest extends TestCase{
 	}
 	
 	@Test
-	public void testLoadingState() {
+	public void testLoadingState() throws Exception{
 		Record mockRecord = Mockito.mock(Record.class);
 		mockRecord.addStudy(nstudy);
+		Mockito.verify(mockRecord).addStudy(nstudy);
 		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
+		JSONFile.loadState("testState");
+		
 	}
-	
 	@Test
 	//test the write method of JSONFile
 	public void testWriteToFile() throws Exception{
