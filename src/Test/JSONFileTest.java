@@ -52,6 +52,13 @@ public class JSONFileTest extends TestCase{
 	}
 	
 	@Test
+	public void testLoadingState() {
+		Record mockRecord = Mockito.mock(Record.class);
+		mockRecord.addStudy(nstudy);
+		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
+	}
+	
+	@Test
 	//test the write method of JSONFile
 	public void testWriteToFile() throws Exception{
 		Record mockRecord = Mockito.mock(Record.class);
@@ -61,6 +68,12 @@ public class JSONFileTest extends TestCase{
 		Mockito.when(mockRecord.size()).thenReturn(1);
 		assertEquals(1, mockRecord.size());
 		
+		
+		
+		
+		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
+		
+//		JSONFile.writeToFile(mockRecord, outFileName);
 //		Mockito.doCallRealMethod().when(mockJsonFile).writeToFile(Mockito.any(Record.class), 
 //				Mockito.any(String.class));
 		

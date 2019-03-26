@@ -127,5 +127,16 @@ public class Study {
 		return "\nStudy_ID: " + this.studyID +"\nStudy_Name: "+ this.studyName +"\n" + text;
 	}
 	
+	//remove the site from study if it contains not readings
+	public void validateSite() {
+		Iterator<HashMap.Entry<String, Site>> entry = listOfSites.entrySet().iterator();
+		while (entry.hasNext()) {
+			Site currentSite = entry.next().getValue();
+			if(currentSite.getItems().isEmpty()) {
+				//set the value of the current site to null
+			}
+		}
+	}
+	
 }	
 
