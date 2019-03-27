@@ -57,30 +57,30 @@ public class JSONFileTest extends TestCase{
 		mockRecord.addStudy(nstudy);
 		Mockito.verify(mockRecord).addStudy(nstudy);
 		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
-		JSONFile.loadState("testState");
+//		JSONFile.loadState("testState");
 		
 	}
-	@Test
-	//test the write method of JSONFile
-	public void testWriteToFile() throws Exception{
-		Record mockRecord = Mockito.mock(Record.class);
-//		JSONFile mockJsonFile = Mockito.mock(JSONFile.class, Mockito.CALLS_REAL_METHODS);
-		mockRecord.addStudy(nstudy);
-		Mockito.verify(mockRecord).addStudy(nstudy);
-		Mockito.when(mockRecord.size()).thenReturn(1);
-		assertEquals(1, mockRecord.size());
-		
-		
-		
-		
-		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
-		
+//	@Test
+//	//test the write method of JSONFile
+//	public void testWriteToFile() throws Exception{
+//		Record mockRecord = Mockito.mock(Record.class);
+////		JSONFile mockJsonFile = Mockito.mock(JSONFile.class, Mockito.CALLS_REAL_METHODS);
+//		mockRecord.addStudy(nstudy);
+//		Mockito.verify(mockRecord).addStudy(nstudy);
+//		Mockito.when(mockRecord.size()).thenReturn(1);
+//		assertEquals(1, mockRecord.size());
+//		
+//		
+//		
+//		
+//		Mockito.when(mockRecord.get(Mockito.anyInt())).thenReturn(nstudy);
+//		
 //		JSONFile.writeToFile(mockRecord, outFileName);
 //		Mockito.doCallRealMethod().when(mockJsonFile).writeToFile(Mockito.any(Record.class), 
 //				Mockito.any(String.class));
 		
 //		Mockito.doNothing().when(mockJsonFile.writeToFile(mockRecord, outFileName));
 //		JSONFile.writeToFile(mockRecord, outFileName);
-	}
+//	}
 
 }
