@@ -44,12 +44,12 @@ public class SiteTest extends TestCase{
 		Site newSite = new Site("12345");
 		ArrayList<Item> items = new ArrayList<Item>();
 		Item item1 = new Item("12345", "Temp", "Fahrenheit", "12547g", 25, 0);
-		Item item2 = new Item("12345", "Temp", "Fahrenheit", "12547g", 26, 2);
+		Item item2 = new Item("12345", "Temp", "Fahrenheit", "12547j", 26, 2);
 		newSite.setRecording(true);
 		items.add(item1);
 		items.add(item2);
 		newSite.setItems(items);
-		assertTrue(newSite.getItems().contains(item1) && newSite.getItems().contains(item2));
+		assertEquals(items, newSite.getItems());
 	}
 
 	public void testAddItem() {
