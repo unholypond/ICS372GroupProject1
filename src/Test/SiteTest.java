@@ -42,7 +42,7 @@ public class SiteTest extends TestCase{
 	public void testSetItems() {
 		Site newSite = new Site("12345");
 		Item item1 = new Item("12345", "Temp", "Fahrenheit", "12547g", 25, 0);
-		Item item2 = new Item("12345", "Temp", "Fahrenheit", "12547g", 26, 2);
+		Item item2 = new Item("12345", "Temp", "Fahrenheit", "12547j", 26, 2);
 		newSite.setRecording(true);
 		newSite.addItem(item1);
 		newSite.addItem(item2);
