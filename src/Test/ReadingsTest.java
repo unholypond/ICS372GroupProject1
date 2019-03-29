@@ -17,10 +17,17 @@ public class ReadingsTest extends TestCase{
 	public void testGetReadings() throws Exception{
 		Readings read = new Readings();
 		Item item1 = new Item();
+		Item item2 = new Item("12345", "Temp", "", "12547g", 25, 0);
 		ArrayList<Item> list = new ArrayList<Item>();
 		list.add(item1);
+		list.add(item2);
 		read.setReadings(list);
-		assertEquals("The reading was not included",item1, list.get(0));
+		try {
+			assertEquals("The reading was not included", list, read.getReadings());
+		}
+		catch(NullPointerException e) {
+			assertNull("Empty list", list);
+		}
 	}
 
 	public void testToString() {
@@ -29,17 +36,14 @@ public class ReadingsTest extends TestCase{
 		ArrayList<Item> list = new ArrayList<Item>();
 		list.add(item1);
 		read.setReadings(list);
-		String expected = "{\r\n" + 
-				"   \"site_readings\":[\r\n" + 
-				"      {\r\n" + 
-				"         \"site_id\":\"12345\",\r\n" + 
-				"	  \"reading_type\":\"Temp\",\r\n" + 
-				"         \"reading_id\":\"12547g\",\r\n" + 
-				"	  \"reading_value\": 25,\r\n" + 
-				"	  \"reading_date\": 0\r\n" + 
-				"      }" + 
-				"   ]\r\n" + 
-				"}";
+		String expected = "{\n" + 
+				"Site_id = 12345\n" + 
+				"reading_type = Temp\n" + 
+				"reading_id = 12547g\n" + 
+				"reading_value = 25.0\n" + 
+				"reading_unit = \n" + 
+				"reading_date = 0\n\r" + 
+				"}\n\n";
 		assertEquals("Wrong string output", expected, read.toString());
 	}
 
