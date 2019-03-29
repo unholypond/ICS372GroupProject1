@@ -24,6 +24,7 @@ public class ReadingsTest extends TestCase{
 	public void testGetReadings() throws Exception{
 		Readings read = new Readings();
 		list.add(item1);
+		list.add(item2);
 		read.setReadings(list);
 		assertTrue(read.getReadings().contains(item1));
 		assertEquals("The reading has the same item as list", read.getReadings().get(0), list.get(0));
