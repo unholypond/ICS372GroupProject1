@@ -13,12 +13,12 @@ To run the application, follow these steps:<br />
   <li>First select your file by clicking upload buttom,<br /></li>
   <li>If the file is a JSON file, Enter Study name and ID in their respective field.<br /></li>
   <li>Else then click read button to read chosen file.<br /></li>
-  <li>Next input your site ID and enter.<br /><li>
+  <li>Next input your site ID and enter.<br /></li>
   <li>After that, click on start button to collect readings or end button to end collecting.<br /></li>
   <li>Next, click view button to see the collected data.<br /></li>
   <li>You can also add reading to the entered site above by clicking add button<br /></li>
   <li>Follow the prompt to enter the required data or cancel to terminate add request.<br /></li>
-  <li>To import another reading, repeat the process from 11.<br /></li> 
+  <li>To import another reading, repeat the process from step 1.<br /></li> 
   <li>Finally the export button will ask for a file name, omit the file extensions then click ok.<br /></li>
   <li>The exported file will be written at the source directory.<br /></li>
 </ol>
