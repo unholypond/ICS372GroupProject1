@@ -1,0 +1,68 @@
+title Authentication Sequence
+GUI -> GUI : initialize()
+GUI -> ProgramState: Load State
+alt open JSON
+GUI->ImportReadingPanel: newPanel()
+opt Open JSON
+note over ImportReadingPanel: Open JSON
+ImportReadingPanel -> JasonFile: get JSON
+JasonFile -> JasonFile : Parse JasonFile 
+JasonFile -> ImportReadingPanel: Return JSON parsed
+ImportReadingPanel -> Record: set Reading to Record
+
+else Open XML
+note over ImportReadingPanel: open XML
+ImportReadingPanel -> XMLFile : get XML
+XMLFile  -> XMLSAXParseHandler   : request Parse XMLFile 
+XMLSAXParseHandler -> XMLFile  : Return XML parsed
+XMLFile -> ImportReadingPanel: Return XML parsed
+XMLFile   -> Record: set Reading to Record
+
+end
+ImportReadingPanel -> ImportReadingPanel: Open file directory
+note over ImportReadingPanel: Fliters .JSON files
+
+opt no study
+ImportReadingPanel -> ImportReadingPanel: add study name and ID
+else has study
+ImportReadingPanel -> Study: Get study name and ID
+Study -> ImportReadingPanel: return Study 
+end
+
+
+
+ImportReadingPanel  -> ImportReadingPanel : Display JSON readings.
+else Collection Options
+note over GUI: Input site ID.
+
+
+opt Start collection
+    GUI -> Site : setRecording(true) 
+    else Stop Collection
+            GUI -> Site : setRecording(false) 
+end
+
+else Export JSON
+Opt OK
+    GUI ->ImportReadingPanel: OutputFile()
+    ImportReadingPanel ->  ImportReadingPanel: writeToFile()
+    note over ImportReadingPanel: Successful
+else Cancel
+    note over GUI: Export Cancelled
+
+end
+else Save state
+ImportReadingPanel -> ProgramState: Store State
+opt Save state
+    
+ImportReadingPanel -> ImportReadingPanel: save to state file. 
+else don't save
+note over ImportReadingPanel: close window
+end
+end
+
+GUI -> CreateReadingPanel: Create reading Panel
+CreateReadingPanel -> Item: get Reading inputs 
+Item -> Site: get reading inputs
+Site -> Item: return Item info
+Item -> CreateReadingPanel: return Item info
