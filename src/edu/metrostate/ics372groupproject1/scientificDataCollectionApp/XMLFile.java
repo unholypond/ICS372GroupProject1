@@ -15,7 +15,7 @@ import org.xml.sax.SAXException;
  */
 
 public class XMLFile {
-	private SAXParserFactory saxParserFactory;
+	private SAXParserFactory saxParserFactory = null;
 	private Study myStudy; //variable to hold the input study from XML
 	
 	public XMLFile() {
@@ -33,7 +33,12 @@ public class XMLFile {
 			saxParser.parse(file, handler);
 			//Get Item List
 			myStudy = handler.getStudy();
-			readings.setReadings(handler.getItemList());			
+			readings.setReadings(handler.getItemList());
+			for(Item i: readings.getReadings()) {
+				//correction to date and unit in the imported readings
+				i.validateDate();
+				i.ValidateUnit();
+			}
 		}
 		catch (ParserConfigurationException | SAXException | IOException e) {
 		    e.printStackTrace();
