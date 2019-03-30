@@ -64,25 +64,29 @@ public class GraphicalUserInterface {
 			}
 		});
 		
-		//main panel that takes care of input files
+		/**
+		 * Main panel for the GUI
+		 * @param
+		 * takes a frame and a static Record object
+		 */
 		ImportReadingPanel importReadingPanel = new ImportReadingPanel(frame, record);
 		frame.getContentPane().add(importReadingPanel);
 		frame.setLocationByPlatform(true);
 	}
 	
 	//Launch the application.
-		public static void main(String[] args) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						GraphicalUserInterface window = new GraphicalUserInterface();
-						window.frame.setVisible(true);
-						window.frame.setPreferredSize(new Dimension(625, 760));
-						window.frame.pack();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GraphicalUserInterface window = new GraphicalUserInterface();
+					window.frame.setVisible(true);
+					window.frame.setPreferredSize(new Dimension(625, 760));
+					window.frame.pack();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
-		}
+			}
+		});
+	}
 }
