@@ -106,6 +106,11 @@ public class SiteTest extends TestCase{
 	}
 	
 	public void testToString() {
-		// To be implemented
+		Site newSite = new Site("12345");
+		newSite.setRecording(true);
+		Item item1 = new Item("12345", "Humidity", "percent", "12547g", 25, 0);
+		newSite.addItem(item1);
+		String expected = item1.toString() + "\n\r";
+		assertEquals("Wrong string output", expected, newSite.toString());
 	}
 }
