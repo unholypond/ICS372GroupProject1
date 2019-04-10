@@ -50,10 +50,11 @@ public class Study {
 	}
 	
 	//adding sites to a study, takes a site as parameter
-	public void addSite(Site site) {
+	public boolean addSite(Site site) {
 		if(!listOfSites.contains(site)) {
 			listOfSites.add(site);
 		}
+		return listOfSites.contains(site);
 	}
 	
 	//set all site to start collecting

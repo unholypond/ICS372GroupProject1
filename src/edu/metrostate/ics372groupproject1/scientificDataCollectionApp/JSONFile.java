@@ -22,9 +22,6 @@ public class JSONFile {
 	private static File outputFile = null;
 	private static FileReader reader = null;
 	
-	//constructor, initialize class members
-	public JSONFile() {}
-		
 	/**
 	 * @param
 	 * ReadJSON method takes a File as a parameter, reads the content into Java Objects
