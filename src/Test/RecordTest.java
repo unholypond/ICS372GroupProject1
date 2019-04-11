@@ -1,9 +1,5 @@
 package Test;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import edu.metrostate.ics372groupproject1.scientificDataCollectionApp.Record;
 import edu.metrostate.ics372groupproject1.scientificDataCollectionApp.Study;
 import junit.framework.TestCase;
@@ -18,8 +14,8 @@ public class RecordTest extends TestCase {
 	Study study3=new Study("3","StudyThree");
 	
 	public void testRecord() {
-		System.out.println(record1);
-		System.out.println(record2);
+//		System.out.println(record1);
+//		System.out.println(record2);
 		assertSame(record1,record2);
 	}
 	

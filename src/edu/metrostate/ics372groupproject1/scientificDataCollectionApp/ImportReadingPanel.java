@@ -336,7 +336,7 @@ public class ImportReadingPanel extends JPanel {
 				if (importedStudy != null) {
 					if (siteID != null) {
 						//create new reading for site  
-						Item reading = addItemFactory(frame);
+						Item reading = getItemInput(frame);
 						if (reading != null) {
 							if (selectedSite.addItem(reading)) {
 								JOptionPane.showMessageDialog(frame, "Reading added to site #" + siteID);
@@ -469,7 +469,7 @@ public class ImportReadingPanel extends JPanel {
 	 * AddItemFactory method to create 
 	 * instance of Item 
 	 */
-	public static Item addItemFactory(JFrame f) {
+	public static Item getItemInput(JFrame f) {
 		Date date = new Date();
 		String readingType, unit, readingID;
 		double readingValue;
